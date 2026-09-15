@@ -1,49 +1,219 @@
 #!/bin/bash
 
-if [ "$#" -lt 3 ]; then
+input=$1
+
+#baseline with no prefetcher and lru replacement policy
+if [ "$input" = "baseline" ]; then
+
+    BRANCH="hashed_perceptron"           # branch/*.bpred
+    L1I_PREFETCHER="no"   # prefetcher/*.l1i_pref
+    L1D_PREFETCHER="no"   # prefetcher/*.l1d_pref
+    L2C_PREFETCHER="no"   # prefetcher/*.l2c_pref
+    LLC_PREFETCHER="no"   # prefetcher/*.llc_pref
+    ITLB_PREFETCHER="no"  # prefetcher/*.itlb_pref
+    DTLB_PREFETCHER="no"  # prefetcher/*.dtlb_pref
+    STLB_PREFETCHER="no"  # prefetcher/*.stlb_pref
+
+    BTB_REPLACEMENT="lru"    # BTB replacement
+    L1I_REPLACEMENT="lru"    # L1I replacement
+    L1D_REPLACEMENT="lru"    # L1D replacement
+    L2C_REPLACEMENT="lru"    # L2C replacement
+    LLC_REPLACEMENT="lru"    # LLC replacement
+    ITLB_REPLACEMENT="lru"   # ITLB replacement
+    DTLB_REPLACEMENT="lru"   # DTLB replacement
+    STLB_REPLACEMENT="lru"   # STLB replacement
+
+    BINARY_NAME="baseline"
+
+#baseline with SPP prefetcher and lru replacement policy
+elif [ "$input" = "spp" ]; then
+
+    BRANCH="hashed_perceptron"           # branch/*.bpred
+    L1I_PREFETCHER="no"   # prefetcher/*.l1i_pref
+    L1D_PREFETCHER="spp"   # prefetcher/*.l1d_pref
+    L2C_PREFETCHER="no"   # prefetcher/*.l2c_pref
+    LLC_PREFETCHER="no"   # prefetcher/*.llc_pref
+    ITLB_PREFETCHER="no"  # prefetcher/*.itlb_pref
+    DTLB_PREFETCHER="no"  # prefetcher/*.dtlb_pref
+    STLB_PREFETCHER="no"  # prefetcher/*.stlb_pref
+
+    BTB_REPLACEMENT="lru"       # BTB replacement
+    L1I_REPLACEMENT="lru"    # L1I replacement
+    L1D_REPLACEMENT="lru"    # L1D replacement
+    L2C_REPLACEMENT="lru"    # L2C replacement
+    LLC_REPLACEMENT="lru"    # LLC replacement
+    ITLB_REPLACEMENT="lru"   # ITLB replacement
+    DTLB_REPLACEMENT="lru"   # DTLB replacement
+    STLB_REPLACEMENT="lru"   # STLB replacement
+
+    BINARY_NAME="spp"
+
+#baseline with IP stride prefetcher and lru replacement policy
+elif [ "$input" = "ipstride" ]; then
+
+    BRANCH="hashed_perceptron"           # branch/*.bpred
+    L1I_PREFETCHER="no"   # prefetcher/*.l1i_pref
+    L1D_PREFETCHER="ip_stride"   # prefetcher/*.l1d_pref
+    L2C_PREFETCHER="no"   # prefetcher/*.l2c_pref
+    LLC_PREFETCHER="no"   # prefetcher/*.llc_pref
+    ITLB_PREFETCHER="no"  # prefetcher/*.itlb_pref
+    DTLB_PREFETCHER="no"  # prefetcher/*.dtlb_pref
+    STLB_PREFETCHER="no"  # prefetcher/*.stlb_pref
+
+    BTB_REPLACEMENT="lru"       # BTB replacement
+    L1I_REPLACEMENT="lru"    # L1I replacement
+    L1D_REPLACEMENT="lru"    # L1D replacement
+    L2C_REPLACEMENT="lru"    # L2C replacement
+    LLC_REPLACEMENT="lru"    # LLC replacement
+    ITLB_REPLACEMENT="lru"   # ITLB replacement
+    DTLB_REPLACEMENT="lru"   # DTLB replacement
+    STLB_REPLACEMENT="lru"   # STLB replacement
+
+    BINARY_NAME="ip_stride"
+
+#baseline with IP stride prefetcher and lru replacement policy
+elif [ "$input" = "irrip" ]; then
+
+    BRANCH="hashed_perceptron"           # branch/*.bpred
+    L1I_PREFETCHER="no"   # prefetcher/*.l1i_pref
+    L1D_PREFETCHER="no"   # prefetcher/*.l1d_pref
+    L2C_PREFETCHER="no"   # prefetcher/*.l2c_pref
+    LLC_PREFETCHER="no"   # prefetcher/*.llc_pref
+    ITLB_PREFETCHER="no"  # prefetcher/*.itlb_pref
+    DTLB_PREFETCHER="no"  # prefetcher/*.dtlb_pref
+    STLB_PREFETCHER="no"  # prefetcher/*.stlb_pref
+
+    BTB_REPLACEMENT="lru"       # BTB replacement
+    L1I_REPLACEMENT="lru"    # L1I replacement
+    L1D_REPLACEMENT="lru"    # L1D replacement
+    L2C_REPLACEMENT="irrip"    # L2C replacement
+    LLC_REPLACEMENT="lru"    # LLC replacement
+    ITLB_REPLACEMENT="lru"   # ITLB replacement
+    DTLB_REPLACEMENT="lru"   # DTLB replacement
+    STLB_REPLACEMENT="lru"   # STLB replacement
+
+    BINARY_NAME="irrip"
+
+elif [ "$input" = "dyn_irrip" ]; then
+
+    BRANCH="hashed_perceptron"           # branch/*.bpred
+    L1I_PREFETCHER="no"   # prefetcher/*.l1i_pref
+    L1D_PREFETCHER="no"   # prefetcher/*.l1d_pref
+    L2C_PREFETCHER="no"   # prefetcher/*.l2c_pref
+    LLC_PREFETCHER="no"   # prefetcher/*.llc_pref
+    ITLB_PREFETCHER="no"  # prefetcher/*.itlb_pref
+    DTLB_PREFETCHER="no"  # prefetcher/*.dtlb_pref
+    STLB_PREFETCHER="no"  # prefetcher/*.stlb_pref
+
+    BTB_REPLACEMENT="lru"       # BTB replacement
+    L1I_REPLACEMENT="lru"    # L1I replacement
+    L1D_REPLACEMENT="lru"    # L1D replacement
+    L2C_REPLACEMENT="dyn_irrip"    # L2C replacement
+    LLC_REPLACEMENT="lru"    # LLC replacement
+    ITLB_REPLACEMENT="lru"   # ITLB replacement
+    DTLB_REPLACEMENT="lru"   # DTLB replacement
+    STLB_REPLACEMENT="lru"   # STLB replacement
+
+    BINARY_NAME="dyn_irrip"
+
+elif [ "$input" = "spp+dyn_irrip" ]; then
+
+    BRANCH="hashed_perceptron"           # branch/*.bpred
+    L1I_PREFETCHER="no"   # prefetcher/*.l1i_pref
+    L1D_PREFETCHER="spp"   # prefetcher/*.l1d_pref
+    L2C_PREFETCHER="no"   # prefetcher/*.l2c_pref
+    LLC_PREFETCHER="no"   # prefetcher/*.llc_pref
+    ITLB_PREFETCHER="no"  # prefetcher/*.itlb_pref
+    DTLB_PREFETCHER="no"  # prefetcher/*.dtlb_pref
+    STLB_PREFETCHER="no"  # prefetcher/*.stlb_pref
+
+    BTB_REPLACEMENT="lru"       # BTB replacement
+    L1I_REPLACEMENT="lru"    # L1I replacement
+    L1D_REPLACEMENT="lru"    # L1D replacement
+    L2C_REPLACEMENT="dyn_irrip"    # L2C replacement
+    LLC_REPLACEMENT="lru"    # LLC replacement
+    ITLB_REPLACEMENT="lru"   # ITLB replacement
+    DTLB_REPLACEMENT="lru"   # DTLB replacement
+    STLB_REPLACEMENT="lru"   # STLB replacement
+
+    BINARY_NAME="spp+dyn_irrip"
+
+elif [ "$input" = "rrip" ]; then
+
+    BRANCH="hashed_perceptron"           # branch/*.bpred
+    L1I_PREFETCHER="no"   # prefetcher/*.l1i_pref
+    L1D_PREFETCHER="no"   # prefetcher/*.l1d_pref
+    L2C_PREFETCHER="no"   # prefetcher/*.l2c_pref
+    LLC_PREFETCHER="no"   # prefetcher/*.llc_pref
+    ITLB_PREFETCHER="no"  # prefetcher/*.itlb_pref
+    DTLB_PREFETCHER="no"  # prefetcher/*.dtlb_pref
+    STLB_PREFETCHER="no"  # prefetcher/*.stlb_pref
+
+    BTB_REPLACEMENT="lru"       # BTB replacement
+    L1I_REPLACEMENT="lru"    # L1I replacement
+    L1D_REPLACEMENT="lru"    # L1D replacement
+    L2C_REPLACEMENT="rrip"    # L2C replacement
+    LLC_REPLACEMENT="lru"    # LLC replacement
+    ITLB_REPLACEMENT="lru"   # ITLB replacement
+    DTLB_REPLACEMENT="lru"   # DTLB replacement
+    STLB_REPLACEMENT="lru"   # STLB replacement
+
+    BINARY_NAME="rrip"
+
+elif [ "$input" = "ipstride+rrip" ]; then
+
+    BRANCH="hashed_perceptron"           # branch/*.bpred
+    L1I_PREFETCHER="no"   # prefetcher/*.l1i_pref
+    L1D_PREFETCHER="ip_stride"   # prefetcher/*.l1d_pref
+    L2C_PREFETCHER="no"   # prefetcher/*.l2c_pref
+    LLC_PREFETCHER="no"   # prefetcher/*.llc_pref
+    ITLB_PREFETCHER="no"  # prefetcher/*.itlb_pref
+    DTLB_PREFETCHER="no"  # prefetcher/*.dtlb_pref
+    STLB_PREFETCHER="no"  # prefetcher/*.stlb_pref
+
+    BTB_REPLACEMENT="lru"       # BTB replacement
+    L1I_REPLACEMENT="lru"    # L1I replacement
+    L1D_REPLACEMENT="lru"    # L1D replacement
+    L2C_REPLACEMENT="rrip"    # L2C replacement
+    LLC_REPLACEMENT="lru"    # LLC replacement
+    ITLB_REPLACEMENT="lru"   # ITLB replacement
+    DTLB_REPLACEMENT="lru"   # DTLB replacement
+    STLB_REPLACEMENT="lru"   # STLB replacement
+
+    BINARY_NAME="ipstride+rrip"
+
+else
     echo
     echo "======================================================================="
     echo " ERROR: Invalid number of arguments supplied."
     echo "======================================================================="
     echo
-    echo "Usage: ./build_champsim.sh <L1d Prefetcher> <L2C Replacement Policy> <binary name>"
+    echo "Usage: ./build_champsim.sh <Name Config> "
     echo
     echo "L1d Prefetchers:"
-    echo "  1) IP Stride"
-    echo "  2) PA2 Prefetcher"
-    echo "  3) No Prefetcher"
+    echo "  1) IP Stride       : ./build_champsim.sh ipstride"
+    echo "  2) SPP             : ./build_champsim.sh spp"
+    echo "  3) No Prefetcher   : ./build_champsim.sh baseline"
     echo
     echo "L2 Replacement Policies:"
-    echo "  1) LRU"
-    echo "  2) DCLIP"
+    echo "  1) LRU             : ./build_champsim.sh baseline"
+    echo "  1) RRIP            : ./build_champsim.sh rrip"
+    echo "  2) IRRIP           : ./build_champsim.sh irrip"
+    echo "  3) Dynamic IRRIP   : ./build_champsim.sh dyn_irrip"
     echo
+    echo "L1d Prefetcher + L2 Replacement Policy"
+    echo "  1) SPP + Dynamic IRRIP : ./build_champsim.sh spp+dyn_irrip"
+    echo "  2) IP Stride + RRIP : ./build_champsim.sh ipstride+rrip"
+    echo 
     echo "Example:"
-    echo "  ./build_champsim.sh ip_stride lru baseline"
+    echo "  ./build_champsim.sh baseline"
     echo
     echo "======================================================================="
     exit 1
 fi
 
 # ChampSim configuration
-BRANCH="hashed_perceptron"           # branch/*.bpred
-L1I_PREFETCHER="no"   # prefetcher/*.l1i_pref
-L1D_PREFETCHER=$1   # prefetcher/*.l1d_pref
-L2C_PREFETCHER="no"   # prefetcher/*.l2c_pref
-LLC_PREFETCHER="no"   # prefetcher/*.llc_pref
-ITLB_PREFETCHER="no"  # prefetcher/*.itlb_pref
-DTLB_PREFETCHER="no"  # prefetcher/*.dtlb_pref
-STLB_PREFETCHER="no"  # prefetcher/*.stlb_pref
 
-BTB_REPLACEMENT="lru"       # BTB replacement
-L1I_REPLACEMENT="lru"    # L1I replacement
-L1D_REPLACEMENT="lru"    # L1D replacement
-L2C_REPLACEMENT=$2    # L2C replacement
-LLC_REPLACEMENT="lru"    # LLC replacement
-ITLB_REPLACEMENT="lru"   # ITLB replacement
-DTLB_REPLACEMENT="lru"   # DTLB replacement
-STLB_REPLACEMENT="lru"   # STLB replacement
-
-BINARY_NAME=$3
 NUM_CORE=1        # tested up to 8-core system
 
 ############## Some useful macros ###############
@@ -247,7 +417,7 @@ echo "DTLB Replacement: ${DTLB_REPLACEMENT}"
 echo "STLB Replacement: ${STLB_REPLACEMENT}"
 
 echo "Cores: ${NUM_CORE}"
-BINARY_NAME="${BRANCH}-${L1I_PREFETCHER}-${L1D_PREFETCHER}-${L2C_PREFETCHER}-${LLC_PREFETCHER}-${ITLB_PREFETCHER}-${DTLB_PREFETCHER}-${STLB_PREFETCHER}-${BTB_REPLACEMENT}-${L1I_REPLACEMENT}-${L1D_REPLACEMENT}-${L2C_REPLACEMENT}-${LLC_REPLACEMENT}-${ITLB_REPLACEMENT}-${DTLB_REPLACEMENT}-${STLB_REPLACEMENT}-${NUM_CORE}core-${3}"
+BINARY_NAME="${BRANCH}-${L1I_PREFETCHER}-${L1D_PREFETCHER}-${L2C_PREFETCHER}-${LLC_PREFETCHER}-${ITLB_PREFETCHER}-${DTLB_PREFETCHER}-${STLB_PREFETCHER}-${BTB_REPLACEMENT}-${L1I_REPLACEMENT}-${L1D_REPLACEMENT}-${L2C_REPLACEMENT}-${LLC_REPLACEMENT}-${ITLB_REPLACEMENT}-${DTLB_REPLACEMENT}-${STLB_REPLACEMENT}-${NUM_CORE}core-${BINARY_NAME}"
 echo "Binary: bin/${BINARY_NAME}"
 echo ""
 mv bin/champsim bin/${BINARY_NAME}

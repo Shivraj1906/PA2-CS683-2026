@@ -14,16 +14,18 @@ git clone https://github.com/Shivraj1906/PA2-CS683-2026.git
 
 ## Compile
 
-To compile ChampSim, specify three parameters: the L1D prefetcher, the L2C replacement policy, and the binary name.
+To compile ChampSim, specify which config you to want use, such as baseline, spp, ipstride, irrip or dyn_irrip etc.
 
-For example, `./build_champsim.sh no lru baseline` builds a single-core processor with a hashed perceptron branch predictor, no L1D data prefetcher, and the LRU replacement policy for the L2C.
+For example, `./build_champsim.sh baseline` builds a single-core processor with a hashed perceptron branch predictor, no L1D data prefetcher and LRU replacement policy at all cache levels.
 
-You can give the binary any name. Custom names help distinguish binaries that use the same configuration.
+Your binary will have different name for different configs. Custom name help distinguish binaries for different configuration.
 
 ```bash
-./build_champsim.sh ${L1D_PREFETCHER} ${L2C_REPLACEMENT} ${BINARY_NAME}
+./build_champsim.sh ${config_name}
 
-./build_champsim.sh no lru baseline
+./build_champsim.sh baseline
+
+--Complied Binary: hashed_perceptron-no-no-no-no-no-no-no-lru-lru-lru-lru-lru-lru-lru-lru-1core-baseline
 ```
 
 ## Run simulation
@@ -34,7 +36,7 @@ You can give the binary any name. Custom names help distinguish binaries that us
 ```
 
 Where:
-- `${BINARY}`: ChampSim binary compiled by `build_champsim.sh` (for example, `hashed_perceptron-no-no-no-no-no-no-no-lru-lru-lru-lru-lru-lru-lru-lru-1core-baseline`)
+- `${BINARY}`: ChampSim binary compiled by `build_champsim.sh baseline` (example, `hashed_perceptron-no-no-no-no-no-no-no-lru-lru-lru-lru-lru-lru-lru-lru-1core-baseline`)
 - `${N_WARM}`: number of instructions for the warmup period (25 million)
 - `${N_SIM}`: number of instructions for the detailed simulation (25 million)
 - `${TRACE_DIR}`: directory containing the trace (for example, `../traces/`)
